@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app.js",
+    "start": "nodemon ./src/index.js",
     "lint": "eslint --quiet --fix src/**.js",
     "format": "prettier --write src/**.*{js,yml,yaml,json}"
   },
@@ -20,9 +20,17 @@
   },
   "homepage": "https://github.com/kwasu-ng/cbtor-api#readme",
   "dependencies": {
+    "@devmastery/pipe": "0.0.8",
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
+    "cuid": "^2.1.8",
     "dotenv": "^8.2.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
-    "mongoose": "^5.10.15"
+    "ip-regex": "^4.2.0",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.15",
+    "save": "^2.4.0"
   },
   "devDependencies": {
     "eslint": "^7.14.0",
