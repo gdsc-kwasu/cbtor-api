@@ -1,3 +1,4 @@
+// take user information and validate
 function buildMakeUser({Id, md5, clean, makeSource}) {
   return function makeUser({
     name,
@@ -13,7 +14,7 @@ function buildMakeUser({Id, md5, clean, makeSource}) {
     // validate user
 
     if (!name) {
-      throw new Error('User first name is required.')
+      throw new Error('User fullname name is required.')
     }
     if (name.length < 6) {
       throw new Error('User first name must be longer than 2 characters.')
@@ -27,23 +28,21 @@ function buildMakeUser({Id, md5, clean, makeSource}) {
     if (!role) {
       throw new Error('role is required.')
     }
+    if (!source) {
+      throw new Error('User must have a source.')
+    }
     if (!password) {
       throw new Error('Password is required')
     }
     if (password.length < 8) {
       throw new Error('password length must be more than 7 character')
     }
-    if (!Id.isValidId(id)) {
-      throw new Error('User must have a valid id.')
-    }
 
     const validSource = makeSource(source)
+    console.log(validSource)
 
-    function makeHash() {
-      return md5(password)
-    }
+    const hash = md5(password)
 
-    const hash = makeHash()
     // return value in the function
     return Object.freeze({
       getName: () => name,
@@ -52,6 +51,7 @@ function buildMakeUser({Id, md5, clean, makeSource}) {
       getCreatedOn: () => createdOn,
       getHash: () => hash,
       getId: () => id,
+      getRole: () => role,
       getModifiedOn: () => modifiedOn,
       getSource: () => validSource,
     })

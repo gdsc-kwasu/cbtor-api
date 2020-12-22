@@ -18,6 +18,7 @@ function clean(email) {
 }
 
 const makeSource = buildMakeSource({isValidIp})
+// ready user valid info. for export
 const makeUser = buildMakeUser({Id, clean, md5, makeSource})
 
 module.exports = makeUser
