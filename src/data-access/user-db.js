@@ -55,20 +55,11 @@ function makeUsersDb({makeDb}) {
   }
 
   async function insert({id: _id = Id.makeId(), ...userInfo}) {
-    const userInf = {
-      name: 'Biodun Habeeb',
-      email: 'wolvecode@yahoo.com',
-      password: 'password',
-      role: 'User',
-      source: {
-        ip: '::1',
-        browser:
-          'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
-      },
-    }
+    console.log(userInfo)
     const db = await makeDb()
-    const result = await db.collection('users').insertOne({_id, ...userInf})
+    const result = await db.collection('users').insertOne({_id, ...userInfo})
     const {_id: id, ...insertedInfo} = result.ops[0]
+    console.log(id)
     return {id, ...insertedInfo}
   }
 

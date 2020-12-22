@@ -1,11 +1,10 @@
 const mongodb = require('mongodb')
-
 const makeUsersDb = require('./user-db')
 
 const MongoClient = mongodb.MongoClient
 
 const url = 'mongodb://localhost:27017'
-const dbName = 'tey'
+const dbName = 'cbt'
 const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,5 +18,4 @@ async function makeDb() {
 }
 
 const usersDb = makeUsersDb({makeDb})
-module.exports = makeDb
 module.exports = usersDb
