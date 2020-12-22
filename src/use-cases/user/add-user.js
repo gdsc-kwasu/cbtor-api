@@ -1,20 +1,26 @@
+// Get user info. from user
+// Inject database interaction from data-access
+// interact user info. with the database injected
 const makeUser = require('../../users')
 
 function makeAddUser({usersDb}) {
-  return function addUser(userInfo) {
+  return async function addUser(userInfo) {
     const user = makeUser(userInfo)
-    console.log(userInfo)
+    const userSource = user.getSource()
     return usersDb.insert({
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      source: user.source,
-      token: user.token,
-      createdOn: user.createdOn,
-      hash: user.hash,
-      id: user.id,
-      role: user.role,
-      modifiedOn: user.modifiedOn,
+      name: user.getName(),
+      email: user.getEmail(),
+      token: user.getToken(),
+      createdOn: user.getCreatedOn(),
+      hash: user.getHash(),
+      id: user.getId(),
+      role: user.getRole(),
+      modifiedOn: user.getModifiedOn(),
+      source: {
+        ip: userSource.getIp(),
+        browser: userSource.getBrowser(),
+        referer: userSource.getReferrer(),
+      },
     })
   }
 }
