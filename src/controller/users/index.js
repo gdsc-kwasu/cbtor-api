@@ -1,21 +1,12 @@
-// Build.
-const makeGetUser = require('./get')
+const addUser = require('../../use-cases/user')
 
-class UserModel {
-  static get(id) {
-    return {
-      firstName: 'Niyi',
-      lastName: 'Habeeb',
-      id,
-    }
-  }
-}
-module.exports = {
-  getUser: (httpRequest) =>
-    makeGetUser({
-      httpRequest,
-      UserModel,
-      throttle: () => false,
-      canMakeRequest: () => true,
-    }),
-}
+const makePostUser = require('./post-user')
+
+const postUser = makePostUser({addUser})
+
+const userController = Object.freeze({
+  postUser,
+})
+
+module.exports = userController
+module.exports = {postUser}
