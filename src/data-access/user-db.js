@@ -3,22 +3,21 @@ const Id = require('../Id')
 function makeUsersDb({makeDb}) {
   return Object.freeze({
     findAll,
-    findByHash,
+    findByEmail,
     findById,
-    findByPostId,
-    findReplies,
     insert,
     remove,
     update,
   })
-  async function findAll({publishedOnly = true} = {}) {
+  async function findAll() {
     const db = await makeDb()
-    const query = publishedOnly ? {published: true} : {}
-    const result = await db.collection('users').find(query)
-    return (await result.toArray()).map(({_id: id, ...found}) => ({
-      id,
-      ...found,
-    }))
+    const result = await db.collection('users').find()
+    const found = await result.toArray()
+    if (found.length === 0) {
+      return null
+    }
+    const {...info} = found
+    return {...info}
   }
   async function findById({id: _id}) {
     const db = await makeDb()
@@ -29,29 +28,6 @@ function makeUsersDb({makeDb}) {
     }
     const {_id: id, ...info} = found[0]
     return {id, ...info}
-  }
-  async function findByPostId({postId, omitReplies = true}) {
-    const db = await makeDb()
-    const query = {postId: postId}
-    if (omitReplies) {
-      query.replyToId = null
-    }
-    const result = await db.collection('users').find(query)
-    return (await result.toArray()).map(({_id: id, ...found}) => ({
-      id,
-      ...found,
-    }))
-  }
-  async function findReplies({commentId, publishedOnly = true}) {
-    const db = await makeDb()
-    const query = publishedOnly
-      ? {published: true, replyToId: commentId}
-      : {replyToId: commentId}
-    const result = await db.collection('users').find(query)
-    return (await result.toArray()).map(({_id: id, ...found}) => ({
-      id,
-      ...found,
-    }))
   }
 
   async function insert({id: _id = Id.makeId(), ...userInfo}) {
@@ -75,9 +51,9 @@ function makeUsersDb({makeDb}) {
     const result = await db.collection('users').deleteOne({_id})
     return result.deletedCount
   }
-  async function findByHash(user) {
+  async function findByEmail(user) {
     const db = await makeDb()
-    const result = await db.collection('users').find({hash: user.hash})
+    const result = await db.collection('users').find({email: user.email})
     const found = await result.toArray()
     if (found.length === 0) {
       return null
