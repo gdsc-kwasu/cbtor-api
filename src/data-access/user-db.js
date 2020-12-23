@@ -19,15 +19,16 @@ function makeUsersDb({makeDb}) {
     const {...info} = found
     return {...info}
   }
-  async function findById({id: _id}) {
+
+  async function findById({_id: userId}) {
     const db = await makeDb()
-    const result = await db.collection('users').find({_id})
+    const result = await db.collection('users').find({_id: userId})
     const found = await result.toArray()
     if (found.length === 0) {
       return null
     }
-    const {_id: id, ...info} = found[0]
-    return {id, ...info}
+    const {_id: id, ...insertedInfo} = found[0]
+    return {id, ...insertedInfo}
   }
 
   async function insert({id: _id = Id.makeId(), ...userInfo}) {
