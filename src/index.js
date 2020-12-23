@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const dotenv = require('dotenv')
 
-const {postUser} = require('./controller/users')
+const {postUser, getUser, getUserId} = require('./controller/users')
 
 const makeCallback = require('./express-callback')
 
@@ -18,6 +18,8 @@ app.use((_, res, next) => {
   next()
 })
 app.post('/users', makeCallback(postUser))
+app.get('/users', makeCallback(getUser))
+app.get('/users/:id', makeCallback(getUserId))
 
 // listen for requests
 app.listen(4000, () => {

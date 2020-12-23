@@ -39,7 +39,6 @@ function buildMakeUser({Id, md5, clean, makeSource}) {
     }
 
     const validSource = makeSource(source)
-    console.log(validSource)
 
     const hash = md5(password)
 
