@@ -6,6 +6,10 @@ const makeUser = require('../../users')
 function makeAddUser({usersDb}) {
   return async function addUser(userInfo) {
     const user = makeUser(userInfo)
+    const exists = await usersDb.findByEmail({email: user.getEmail()})
+    if (exists) {
+      return {message: 'user exist', exists}
+    }
     const userSource = user.getSource()
     return usersDb.insert({
       name: user.getName(),
