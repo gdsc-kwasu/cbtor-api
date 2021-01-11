@@ -1,27 +1,22 @@
-const express = require('express')
+require('dotenv').config()
+const http = require('http')
+const dbConnection = require('./database/connection')
 
-const bodyParser = require('body-parser')
+const app = require('./app')
 
-const dotenv = require('dotenv')
+const server = http.createServer(app)
 
-const {postUser, getUser, getUserId} = require('./controller/users')
+const PORT = process.env.port
 
-const makeCallback = require('./express-callback')
+const startServer = () => {
+  server.listen(PORT, () => {
+    console.log(`Application  started on ${PORT}`)
+  })
+}
 
-dotenv.config()
-
-const app = express()
-app.use(bodyParser.json())
-// TODO: figure out DNT compliance.
-app.use((_, res, next) => {
-  res.set({Tk: '!'})
-  next()
-})
-app.post('/users', makeCallback(postUser))
-app.get('/users', makeCallback(getUser))
-app.get('/users/:id', makeCallback(getUserId))
-
-// listen for requests
-app.listen(4000, () => {
-  console.log('Server is listening on port 4000')
-})
+dbConnection(process.env.DM_BASE_URL)
+  .then(startServer)
+  .catch(() => {
+    console.error('Could not establish database')
+    process.exit()
+  })

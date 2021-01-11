@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/index.js",
     "start": "npm run dev",
-    "lint": "eslint --quiet --fix src/**.js",
+    "lint": "eslint --quiet --fix src/*.js",
     "format": "prettier --write src/**.*{js,yml,yaml,json}"
   },
   "repository": {
@@ -23,14 +23,18 @@
   "dependencies": {
     "@devmastery/pipe": "0.0.8",
     "axios": "^0.21.0",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "cuid": "^2.1.8",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "ip-regex": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.10.15",
+    "mongoose": "^5.11.11",
     "save": "^2.4.0"
   },
   "devDependencies": {
