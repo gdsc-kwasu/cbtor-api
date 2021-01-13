@@ -1,15 +1,10 @@
 const bcrypt = require('bcrypt')
 
-async function makeComparePassword(userSchema) {
-  return await (userSchema.methods.comparePassword = function (
-    plainPassword,
-    cb
-  ) {
-    bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-      if (err) return cb(err)
-      cb(null, isMatch)
-    })
-  })
+function makeComparePassword(userSchema) {
+  userSchema.methods.comparePassword = function (password) {
+    const user = this
+    return bcrypt.compare(password, user.password)
+  }
 }
 
 module.exports = makeComparePassword
