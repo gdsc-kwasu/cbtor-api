@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const buildMakeHash = require('../controllers/user/hash')
 const makeGenerateToken = require('../controllers/user/generate-token')
 const makeComparePassword = require('../controllers/user/compare-password')
-const makeFindByToken = require('../controllers/user/find-by-token')
+// const makeFindByToken = require('../controllers/user/find-by-token')
 
 const userSchema = mongoose.Schema(
   {
